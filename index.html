@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Oficial - AGILDAY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- IDENTIDADE VISUAL AGIL SOLAR --- */
+        :root {
+            --agil-orange: #FF6600;
+            --agil-yellow: #FFD700;
+            --dark-bg: #0a0a0a;
+            --card-bg: #141414;
+            --text-white: #ffffff;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            font-family: 'Montserrat', sans-serif;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            background-image:
+                    radial-gradient(circle at 10% 20%, rgba(255, 102, 0, 0.05) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 40%);
+        }
+
+        /* Títulos */
+        h1.agil-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #FFF 20%, var(--agil-orange) 60%, var(--agil-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 20px rgba(255, 102, 0, 0.3);
+        }
+
+        .subtitle-agil {
+            font-family: 'Anton', sans-serif;
+            color: var(--agil-orange);
+            letter-spacing: 4px;
+        }
+
+        /* Tabs */
+        .tab-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #888;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(90deg, var(--agil-orange), #ff8533);
+            color: white;
+            border-color: var(--agil-orange);
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
+            transform: skew(-10deg);
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideUp 0.4s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tabela Desktop Padrão */
+        .price-table {
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            width: 100%;
+        }
+
+        .price-table thead th {
+            color: var(--agil-orange);
+            font-family: 'Anton', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--agil-orange);
+            padding: 15px;
+            text-align: left;
+        }
+
+        .price-row {
+            background-color: var(--card-bg);
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .price-row:hover {
+            transform: translateX(5px);
+            background-color: #1a1a1a;
+            border-left: 3px solid var(--agil-orange);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .price-row td {
+            padding: 18px 12px;
+            vertical-align: middle;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        /* --- RESPONSIVIDADE MOBILE (Card View) --- */
+        @media (max-width: 768px) {
+            /* Esconde cabeçalho da tabela */
+            .price-table thead {
+                display: none;
+            }
+
+            /* Transforma linhas em blocos (cards) */
+            .price-table, .price-table tbody, .price-table tr, .price-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .price-row {
+                margin-bottom: 20px;
+                border: 1px solid #222;
+                border-radius: 12px;
+                padding: 15px;
+                background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            }
+
+            /* Remove bordas padrão de tabela */
+            .price-row td {
+                padding: 8px 0;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #222;
+            }
+
+            .price-row td:last-child {
+                border-bottom: none;
+            }
+
+            /* Estilo específico para o Título (primeira célula) */
+            .price-row td:first-child {
+                display: block;
+                padding-bottom: 15px;
+                margin-bottom: 5px;
+                border-bottom: 1px solid #333;
+                text-align: center;
+            }
+
+            /* Labels automáticos via CSS (data-label) */
+            .price-row td::before {
+                content: attr(data-label);
+                color: #666;
+                font-size: 0.8rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                margin-right: 10px;
+            }
+
+            /* Ajuste de fontes no mobile */
+            .new-price { font-size: 1.6rem; }
+            .old-price { font-size: 0.9rem; }
+            .generation-val { font-size: 1.1rem; }
+        }
+
+        /* Colunas */
+        .product-name {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .product-desc {
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .generation-val {
+            font-family: 'Roboto Mono', monospace;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .generation-unit {
+            color: #666;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .old-price {
+            color: #555;
+            text-decoration: line-through;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .new-price {
+            color: var(--agil-yellow);
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .discount-badge {
+            background: linear-gradient(135deg, var(--agil-orange), #ff4500);
+            color: white;
+            padding: 6px 10px;
+            font-weight: 900;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            display: inline-block;
+            box-shadow: 0 2px 10px rgba(255, 69, 0, 0.3);
+        }
+
+        /* Utilitários Visuais */
+        .solar-glow {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: var(--agil-orange);
+            filter: blur(80px);
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Impressão */
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: #000 !important; }
+            .price-row { break-inside: avoid; border: 1px solid #333 !important; box-shadow: none !important; display: table-row !important; }
+            .price-table thead { display: table-header-group !important; }
+            .price-table td { display: table-cell !important; border-bottom: 1px solid #333 !important; }
+            .price-row td:first-child { display: table-cell !important; text-align: left !important; }
+            .price-row td::before { content: none !important; } /* Remove labels mobile na impressão */
+            .tab-content:not(.active) { display: none !important; }
+            h1.agil-title { -webkit-text-fill-color: black; color: black; text-shadow: none; }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex flex-col items-center">
+
+<div class="solar-glow" style="top: -50px; left: 20%;"></div>
+<div class="solar-glow" style="bottom: 100px; right: 10%; background: var(--agil-yellow);"></div>
+
+<!-- Painel de Controle -->
+<div class="w-full max-w-6xl mb-6 flex justify-center md:justify-end no-print">
+    <button onclick="window.print()" class="w-full md:w-auto bg-[var(--agil-orange)] hover:bg-[#e65c00] text-white px-6 py-3 rounded-lg font-bold transition shadow-lg shadow-orange-900/20 text-sm flex items-center justify-center gap-2 group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:scale-110 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        IMPRIMIR TABELA
+    </button>
+</div>
+
+<!-- Tabela A4 -->
+<div class="w-full max-w-6xl bg-[#0a0a0a] p-4 md:p-10 min-h-[800px] border border-[#222] relative overflow-hidden rounded-2xl shadow-2xl">
+
+    <!-- Cabeçalho -->
+    <div class="text-center mb-8 md:mb-10 relative z-10">
+        <p class="subtitle-agil text-xs md:text-sm font-bold mb-2 tracking-[0.3em]">BLACK FRIDAY ÁGIL SOLAR</p>
+        <h1 class="agil-title text-5xl md:text-8xl italic">AGILDAY</h1>
+        <div class="flex justify-center items-center gap-2 mt-4 opacity-80">
+            <div class="h-[1px] w-8 md:w-12 bg-zinc-600"></div>
+            <span class="text-[var(--agil-yellow)] text-[10px] md:text-xs font-bold tracking-widest uppercase">Tabela Oficial de Vendas</span>
+            <div class="h-[1px] w-8 md:w-12 bg-zinc-600"></div>
+        </div>
+    </div>
+
+    <!-- Abas -->
+    <div class="flex justify-center gap-2 md:gap-6 mb-8 relative z-10">
+        <button onclick="switchTab('inversores')" id="btn-inversores" class="tab-btn active px-4 md:px-10 py-3 text-sm md:text-lg flex-1 md:flex-none">
+            ⚡ Inversores
+        </button>
+        <button onclick="switchTab('micro')" id="btn-micro" class="tab-btn px-4 md:px-10 py-3 text-sm md:text-lg flex-1 md:flex-none">
+            ☀️ Micro
+        </button>
+    </div>
+
+    <!-- TABELA: INVERSORES -->
+    <div id="tab-inversores" class="tab-content active">
+        <table class="price-table">
+            <thead>
+            <tr>
+                <th style="width: 40%">EQUIPAMENTO</th>
+                <th style="width: 15%">GERAÇÃO</th>
+                <th style="width: 15%">TABELA</th>
+                <th style="width: 20%">AGILDAY</th>
+                <th style="width: 10%" class="text-center">DESC.</th>
+            </tr>
+            </thead>
+            <tbody id="body-inversores"></tbody>
+        </table>
+    </div>
+
+    <!-- TABELA: MICROINVERSORES -->
+    <div id="tab-micro" class="tab-content">
+        <table class="price-table">
+            <thead>
+            <tr>
+                <th style="width: 40%">EQUIPAMENTO</th>
+                <th style="width: 15%">GERAÇÃO</th>
+                <th style="width: 15%">TABELA</th>
+                <th style="width: 20%">AGILDAY</th>
+                <th style="width: 10%" class="text-center">DESC.</th>
+            </tr>
+            </thead>
+            <tbody id="body-micro"></tbody>
+        </table>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="mt-16 pt-8 border-t border-zinc-900 flex flex-col items-center">
+        <p class="text-zinc-600 text-xs uppercase tracking-widest mb-2 font-bold">ÁGIL SOLAR • ENERGIA INTELIGENTE</p>
+    </div>
+</div>
+
+<script>
+    // Formato Dados: [Titulo, Subtitulo, Geração (kwh), Preço Antigo, Preço Novo]
+    const dataInversores = [
+        ["5x Módulos ODEX 585W", "Inv. Sofar 3.3KW 220V", 350, 9743.01, 8497.00],
+        ["6x Módulos ODEX 585W", "Inv. Sofar 3.3KW 220V", 420, 10753.29, 9497.00],
+        ["7x Módulos ODEX 585W", "Inv. Sofar 3.3KW 220V", 490, 11863.38, 10497.00],
+        ["8x Módulos ODEX 585W", "Inv. Sofar 3.3KW 220V", 560, 12758.13, 11197.00],
+        ["9x Módulos ODEX 585W", "Inv. Sofar 4KW 220V", 630, 14765.11, 12997.00],
+        ["10x Módulos ODEX 585W", "Inv. Sofar 5KW 220V", 700, 16058.83, 13997.00],
+        ["11x Módulos ODEX 585W", "Inv. Sofar 5KW 220V", 770, 17298.50, 14997.00],
+        ["12x Módulos ODEX 585W", "Inv. Sofar 6KW 220V", 840, 18950.00, 16597.00],
+        ["13x Módulos ODEX 585W", "Inv. Sofar 6KW 220V", 910, 20150.20, 17597.00],
+        ["14x Módulos ODEX 585W", "Inv. Sofar 8KW 220V", 980, 21990.00, 19197.00],
+        ["15x Módulos ODEX 585W", "Inv. Sofar 8KW 220V", 1050, 23150.00, 20197.00],
+        ["16x Módulos ODEX 585W", "Inv. Sofar 8KW 220V", 1120, 24290.00, 21197.00],
+        ["17x Módulos ODEX 585W", "Inv. Sofar 8KW 220V", 1190, 25450.00, 22197.00],
+        ["18x Módulos ODEX 585W", "Inv. Sofar 10KW 220V", 1260, 27750.00, 24197.00],
+        ["19x Módulos ODEX 585W", "Inv. Sofar 10KW 220V", 1330, 28890.00, 25197.00],
+        ["20x Módulos ODEX 585W", "Inv. Sofar 10KW 220V", 1400, 30050.00, 26197.00]
+    ];
+
+    // ATUALIZADO: Inclui kits de 12 módulos
+    const dataMicro = [
+        ["4x Módulos 700W HJT", "1x Micro Growatt NEO 2250", 360, 9112.69, 8197.00],
+        ["4x Módulos ODEX 585W", "1x Micro Growatt NEO 2250", 312, 8212.37, 7197.00],
+        ["8x Módulos 700W HJT", "2x Micro Growatt NEO 2250", 720, 16392.17, 13997.00],
+        ["8x Módulos ODEX 585W", "2x Micro Growatt NEO 2250", 624, 14076.64, 11997.00],
+        ["12x Módulos 700W HJT", "3x Micro Growatt NEO 2250", 1080, 23550.85, 19997.00],
+        ["12x Módulos ODEX 585W", "3x Micro Growatt NEO 2250", 936, 20550.40, 17597.00]
+    ];
+
+    let currentTab = 'inversores';
+
+    function init() {
+        renderTable('body-inversores', dataInversores);
+        renderTable('body-micro', dataMicro);
+    }
+
+    function createRowHTML(title, subtitle, generation, oldPrice, newPrice) {
+        const discount = ((oldPrice - newPrice) / oldPrice) * 100;
+        const discountText = Math.round(discount) + "%";
+
+        // Adicionei data-label para o CSS Mobile usar
+        return `
+                <td>
+                    <div class="product-name">${title}</div>
+                    <div class="product-desc uppercase">${subtitle}</div>
+                </td>
+                <td data-label="Geração:">
+                    <div class="generation-val">${generation} <span class="generation-unit">kWh</span></div>
+                </td>
+                <td data-label="Tabela:">
+                    <div class="old-price">${formatMoney(oldPrice)}</div>
+                </td>
+                <td data-label="AGILDAY:">
+                    <div class="new-price">${formatMoney(newPrice)}</div>
+                </td>
+                <td class="text-center" data-label="Desconto:">
+                    <span class="discount-badge">-${discountText}</span>
+                </td>
+            `;
+    }
+
+    function renderTable(tbodyId, data) {
+        const tbody = document.getElementById(tbodyId);
+        tbody.innerHTML = '';
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.className = 'price-row';
+            row.innerHTML = createRowHTML(item[0], item[1], item[2], item[3], item[4]);
+            tbody.appendChild(row);
+        });
+    }
+
+    function switchTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-${tab}`).classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.getElementById(`tab-${tab}`).classList.add('active');
+    }
+
+    function formatMoney(val) {
+        return val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
